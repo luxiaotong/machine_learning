@@ -18,5 +18,10 @@ Y = a .* exp(b.*X);
 
 plot(X,Y);
 
+% (b)
 yb = a * exp(b * 0);
 fprintf('(b) 1900年估计人口为%f (实际人口为13607272)\n', yb)
+
+% (c)
+yc = exp(p(1)) * 100 - 100;
+fprintf('(c) 年增长率为%.2f%% \n', yc)
