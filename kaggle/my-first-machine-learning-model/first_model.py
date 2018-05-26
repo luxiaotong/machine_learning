@@ -3,17 +3,16 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import Imputer
 
 
 data_file_path = './train.csv'
 data = pd.read_csv(data_file_path)
-#print(data.describe())
 
 y = data.SalePrice
 predictors = ['LotArea', 'YearBuilt', '1stFlrSF', '2ndFlrSF', 
                         'FullBath', 'BedroomAbvGr', 'TotRmsAbvGrd']
 X = data[predictors]
-#print(X.describe())
 
 # Predict
 iowa_model = DecisionTreeRegressor()
@@ -63,5 +62,19 @@ predicted_prices = forest_model.predict(test_X)
 print(predicted_prices)
 
 # Submission
-my_submission = pd.DataFrame({'Id': test.Id, 'SalePrice': predicted_prices})
-my_submission.to_csv('submission.csv', index=False)
+#my_submission = pd.DataFrame({'Id': test.Id, 'SalePrice': predicted_prices})
+#my_submission.to_csv('submission.csv', index=False)
+
+# Miss value
+#original_data = data
+#cols_with_missing = [col for col in original_data.columns 
+#                                 if original_data[col].isnull().any()]
+#reduced_original_data = original_data.drop(cols_with_missing, axis=1)
+#reduced_test_data = test_data.drop(cols_with_missing, axis=1)
+
+# Imputation
+#new_data = data
+#my_imputer = Imputer()
+#new_data = my_imputer.fit_transform(new_data.select_dtypes(exclude=['object']))
+#data_with_imputed_values = my_imputer.fit_transform(new_data)
+#print(data_with_imputed_values)
