@@ -7,6 +7,13 @@ from sklearn.metrics import mean_squared_error
 import numpy as np
 from scipy.stats import skew
 from math import sqrt
+import math
+
+#A function to calculate Root Mean Squared Logarithmic Error (RMSLE)
+def rmsle(y, y_pred):
+    assert len(y) == len(y_pred)
+    terms_to_sum = [(math.log(y_pred[i] + 1) - math.log(y[i] + 1)) ** 2.0 for i,pred in enumerate(y_pred)]
+    return (sum(terms_to_sum) * (1.0/len(y))) ** 0.5
 
 # Load
 data = pd.read_csv('./train.csv')
@@ -42,6 +49,7 @@ xgb_model.fit(train_X, train_y, early_stopping_rounds=5,
 # Prediction
 predictions = xgb_model.predict(test_X)
 print("Mean Absolute Error : " + str(mean_absolute_error(predictions, test_y)))
+print("Score: " + str(rmsle(test_y, predictions)))
 #print("Mean Squared Error : " + str(sqrt(mean_squared_error(test_y, predictions))))
 
 # Test
